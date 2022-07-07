@@ -36,4 +36,16 @@ app.delete("/posts/:id", (req, res) => {
   return res.send(posts);
 });
 
-app.patch;
+app.patch("/posts/:id", (req, res) => {
+  const id = req.params.id;
+  const newTitle = req.body.title;
+  const newContent = req.body.content;
+  posts = posts.map((post) => {
+    if (post.id == id) {
+      return { ...post, title: newTitle, content: newContent };
+    } else {
+      return post;
+    }
+  });
+  return res.send(posts);
+});
