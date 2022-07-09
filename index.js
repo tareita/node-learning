@@ -1,9 +1,18 @@
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
 
 app.listen(3000, () => {
   console.log("server started");
 });
+
+mongoose.connect(
+  "url",
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  () => {
+    console.log("MongoDB connected");
+  }
+);
 
 app.use(express.json());
 
