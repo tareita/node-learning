@@ -35,9 +35,9 @@ app.get("/posts", async (req, res) => {
   return res.send(posts);
 });
 
-app.get("/posts/:id", (req, res) => {
+app.get("/posts/:id", async (req, res) => {
   const id = req.params.id;
-  const post = posts.find((post) => post.id == id);
+  const post = await Post.find({ _id: id });
   return res.send(post);
 });
 
