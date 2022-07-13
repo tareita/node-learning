@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
+const { Schema } = mongoose;
 
 app.listen(3000, () => {
   console.log("server started");
@@ -18,6 +19,14 @@ mongoose.connect(
 
 app.use(express.json());
 
+const postSchema = new Schema({
+  title: String,
+  content: String,
+  author: String,
+});
+
+const Post = mongoose.model("Post", postSchema);
+
 let posts = [];
 let count = 1;
 
@@ -31,13 +40,16 @@ app.get("/posts/:id", (req, res) => {
   return res.send(post);
 });
 
-app.post("/posts", (req, res) => {
-  const title = req.body.title;
-  const content = req.body.content;
-  const author = req.body.author;
-  const post = { title: title, content: content, author: author, id: count };
-  count++;
-  posts.push(post);
+app.post("/posts", async (req, res) => {
+  title = req.body.title;
+  content = req.body.content;
+  author = req.body.author;
+  const post = new Post({
+    title: title,
+    content: content,
+    author: author,
+  });
+  await post.save();
   return res.send("your new post: " + post.title + " " + post.content);
 });
 
