@@ -30,7 +30,8 @@ const Post = mongoose.model("Post", postSchema);
 let posts = [];
 let count = 1;
 
-app.get("/posts", (req, res) => {
+app.get("/posts", async (req, res) => {
+  const posts = await Post.find();
   return res.send(posts);
 });
 
