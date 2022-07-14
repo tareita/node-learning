@@ -54,22 +54,22 @@ app.post("/posts", async (req, res) => {
   return res.send("your new post: " + post.title + " " + post.content);
 });
 
-app.delete("/posts/:id", (req, res) => {
+app.delete("/posts/:id", async (req, res) => {
   const id = req.params.id;
-  posts = posts.filter((post) => post.id != id);
-  return res.send(posts);
+  const post = await Post.findOneAndDelete({ _id: id });
+  if (!post) {
+    return res.send("post not found");
+  }
+  return res.send(post);
 });
 
-app.patch("/posts/:id", (req, res) => {
+app.patch("/posts/:id", async (req, res) => {
   const id = req.params.id;
   const newTitle = req.body.title;
   const newContent = req.body.content;
-  posts = posts.map((post) => {
-    if (post.id == id) {
-      return { ...post, title: newTitle, content: newContent };
-    } else {
-      return post;
-    }
-  });
-  return res.send(posts);
+  const post = await Post.findOneAndUpdate(
+    { _id: id },
+    { title: newTitle, content: newContent }
+  );
+  return res.send(post);
 });
