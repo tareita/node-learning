@@ -25,7 +25,18 @@ const postSchema = new Schema({
   author: String,
 });
 
+const commentSchema = new Schema({
+  content: String,
+  author: String,
+  post: {
+    type: mongoose.Types.ObjectId,
+    ref: "Post",
+  },
+});
+
 const Post = mongoose.model("Post", postSchema);
+
+const Comment = mongoose.model("Comment", commentSchema);
 
 let posts = [];
 let count = 1;
@@ -38,13 +49,12 @@ app.get("/posts", async (req, res) => {
 app.get("/posts/:id", async (req, res) => {
   const id = req.params.id;
   const post = await Post.find({ _id: id });
-  return res.send(post);
+  const comments = await Comment.find({ post: id });
+  return res.send({ post, comments });
 });
 
 app.post("/posts", async (req, res) => {
-  title = req.body.title;
-  content = req.body.content;
-  author = req.body.author;
+  const { title, content, author } = req.body;
   const post = new Post({
     title: title,
     content: content,
@@ -72,4 +82,15 @@ app.patch("/posts/:id", async (req, res) => {
     { title: newTitle, content: newContent }
   );
   return res.send(post);
+});
+
+app.post("/comments", async (req, res) => {
+  const { postId, content, author } = req.body;
+  const comment = new Comment({
+    content: content,
+    author: author,
+    post: postId,
+  });
+  await comment.save();
+  return res.send(comment);
 });
