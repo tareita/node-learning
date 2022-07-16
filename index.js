@@ -50,7 +50,7 @@ app.get("/posts", async (req, res) => {
 
 app.get("/posts/:id", async (req, res) => {
   const id = req.params.id;
-  const post = await Post.find({ _id: id });
+  const post = await Post.findById(id);
   const comments = await Comment.find({ post: id });
   return res.send({ post, comments });
 });
