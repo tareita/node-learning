@@ -2,10 +2,11 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require("cors");
 dotenv.config();
 const { Schema } = mongoose;
 
-app.listen(3000, () => {
+app.listen(4000, () => {
   console.log("server started");
 });
 
@@ -18,6 +19,7 @@ mongoose.connect(
 );
 
 app.use(express.json());
+app.use(cors());
 
 const postSchema = new Schema({
   title: String,
@@ -43,7 +45,7 @@ let count = 1;
 
 app.get("/posts", async (req, res) => {
   const posts = await Post.find();
-  return res.send(posts);
+  return res.send({ posts });
 });
 
 app.get("/posts/:id", async (req, res) => {
