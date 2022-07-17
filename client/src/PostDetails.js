@@ -1,6 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Comments from "./Comments";
+import Comment from "./Comment";
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -16,7 +18,6 @@ const PostDetails = () => {
     setPost(data.post);
     setComments(data.comments);
   };
-  console.log(post);
   return (
     <div>
       <div className="card mb-3">
@@ -27,18 +28,7 @@ const PostDetails = () => {
         </div>
       </div>
       <div>
-        {comments.map((comment) => {
-          return (
-            <div className="card mb-3">
-              <div className="card-body">
-                <h5 className="card-subtitle mb-2 text-muted">
-                  {comment.author}
-                </h5>
-                <p className="card-text">{comment.content}</p>
-              </div>
-            </div>
-          );
-        })}
+        <Comments comments={comments} />
       </div>
     </div>
   );
