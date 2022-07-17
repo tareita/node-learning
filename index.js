@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 dotenv.config();
 const { Schema } = mongoose;
+const bodyParser = require("body-parser");
 
 app.listen(4000, () => {
   console.log("server started");
@@ -20,6 +21,7 @@ mongoose.connect(
 
 app.use(express.json());
 app.use(cors());
+app.use(bodyParser.json());
 
 const postSchema = new Schema({
   title: String,
@@ -56,6 +58,7 @@ app.get("/posts/:id", async (req, res) => {
 });
 
 app.post("/posts", async (req, res) => {
+  console.log(req.body);
   const { title, content, author } = req.body;
   const post = new Post({
     title: title,
