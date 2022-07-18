@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Post from "./Post";
 
 const Posts = () => {
@@ -14,6 +15,9 @@ const Posts = () => {
   return (
     <div>
       <h1 className="my-3"> Posts </h1>
+      <div className="mb-3">
+        <Link to="/create-post">Make your own post here</Link>
+      </div>
       {posts.map((post, index) => (
         <Post post={post} key={index} />
       ))}

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
   const [formData, setFormData] = useState({});
+  const navigate = useNavigate();
   const handleFormDataChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -9,12 +11,14 @@ const CreatePost = () => {
   const handleSubmitClick = async (e) => {
     e.preventDefault();
     console.log(JSON.stringify(formData));
-    await fetch("http://localhost:4000/posts/", {
+    const res = await fetch("http://localhost:4000/posts/", {
       method: "POST",
       body: JSON.stringify(formData),
-      "Content-Type": "application/json",
-      Accept: "application/json",
+      headers: { "Content-Type": "application/json" },
     });
+    const data = await res.json();
+    const id = data.post._id;
+    navigate("/posts/" + id);
   };
   return (
     <div>
