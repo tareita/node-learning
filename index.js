@@ -95,5 +95,5 @@ app.post("/comments", async (req, res) => {
     post: postId,
   });
   await comment.save();
-  return res.send(comment);
+  return res.send({ comment });
 });

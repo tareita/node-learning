@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Comments from "./Comments";
 import Comment from "./Comment";
+import CreateComment from "./CreateComment";
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -30,6 +31,11 @@ const PostDetails = () => {
           <p className="card-text">{content}</p>
         </div>
       </div>
+      <CreateComment
+        post={post}
+        setComments={setComments}
+        comments={comments}
+      />
       <div>
         <Comments comments={comments} />
       </div>

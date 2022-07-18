@@ -7,10 +7,8 @@ const CreatePost = () => {
   const handleFormDataChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  console.log(formData);
   const handleSubmitClick = async (e) => {
     e.preventDefault();
-    console.log(JSON.stringify(formData));
     const res = await fetch("http://localhost:4000/posts/", {
       method: "POST",
       body: JSON.stringify(formData),
