@@ -56,7 +56,6 @@ app.get("/posts/:id", async (req, res) => {
 });
 
 app.post("/posts", async (req, res) => {
-  console.log(req.body);
   const { title, content, author } = req.body;
   const post = new Post({
     title: title,
@@ -95,5 +94,6 @@ app.post("/comments", async (req, res) => {
     post: postId,
   });
   await comment.save();
+
   return res.send({ comment });
 });

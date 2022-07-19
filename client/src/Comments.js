@@ -5,7 +5,6 @@ import Comment from "./Comment";
 
 const Comments = (props) => {
   const { comments } = props;
-  console.log(comments);
   return (
     <div>
       <h6>Comments:</h6>

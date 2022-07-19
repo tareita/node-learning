@@ -1,4 +1,3 @@
-import e from "express";
 import React, { useState } from "react";
 
 const CreateComment = (props) => {
@@ -7,13 +6,15 @@ const CreateComment = (props) => {
   const handleFormDataChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleSubmitClick = async () => {
-    const res = await fetch("http://localhost:4000/comments", {
+  const handleSubmitClick = async (e) => {
+    e.preventDefault();
+    const body = { ...formData, postId: post._id };
+    const res = await fetch("http://localhost:4000/comments/", {
       method: "POST",
-      body: JSON.stringify({ ...formData, postId: post.id }),
-      header: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" },
     });
-    const data = res.json();
+    const data = await res.json();
     const comment = data.comment;
     setComments([...comments, comment]);
   };
