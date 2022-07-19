@@ -21,20 +21,26 @@ mongoose.connect(
 app.use(express.json());
 app.use(cors());
 
-const postSchema = new Schema({
-  title: String,
-  content: String,
-  author: String,
-});
-
-const commentSchema = new Schema({
-  content: String,
-  author: String,
-  post: {
-    type: mongoose.Types.ObjectId,
-    ref: "Post",
+const postSchema = new Schema(
+  {
+    title: String,
+    content: String,
+    author: String,
   },
-});
+  { timestamps: true }
+);
+
+const commentSchema = new Schema(
+  {
+    content: String,
+    author: String,
+    post: {
+      type: mongoose.Types.ObjectId,
+      ref: "Post",
+    },
+  },
+  { timestamps: true }
+);
 
 const Post = mongoose.model("Post", postSchema);
 
@@ -44,14 +50,14 @@ let posts = [];
 let count = 1;
 
 app.get("/posts", async (req, res) => {
-  const posts = await Post.find();
+  const posts = await Post.find().sort("-createdAt");
   return res.send({ posts });
 });
 
 app.get("/posts/:id", async (req, res) => {
   const id = req.params.id;
   const post = await Post.findById(id);
-  const comments = await Comment.find({ post: id });
+  const comments = await Comment.find({ post: id }).sort("-createdAt");
   return res.send({ post, comments });
 });
 

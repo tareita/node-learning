@@ -16,7 +16,7 @@ const CreateComment = (props) => {
     });
     const data = await res.json();
     const comment = data.comment;
-    setComments([...comments, comment]);
+    setComments([comment, ...comments]);
   };
   return (
     <div className="card">
