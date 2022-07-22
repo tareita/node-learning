@@ -7,6 +7,7 @@ dotenv.config();
 const { Schema } = mongoose;
 const posts = require("./routes/posts");
 const comments = require("./routes/comments");
+const users = require("./routes/users");
 
 app.listen(4000, () => {
   console.log("server started");
@@ -24,3 +25,4 @@ app.use(express.json());
 app.use(cors());
 app.use("/posts", posts);
 app.use("/comments", comments);
+app.use("/users", users);
