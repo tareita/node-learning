@@ -16,7 +16,7 @@ const register = async (req, res) => {
   });
   await user.save();
   const token = jwt.sign({ id: _id }, process.env.SECRET_KEY);
-  return res.send({ user, token });
+  return res.send({ username: user.username, token });
 };
 
 const login = async (req, res) => {
@@ -30,7 +30,7 @@ const login = async (req, res) => {
     return res.send("wrong password");
   }
   const token = jwt.sign({ id: _id }, process.env.SECRET_KEY);
-  return res.send({ user: existingUser, token });
+  return res.send({ username: existingUser.username, token });
 };
 
 module.exports = { register, login };
