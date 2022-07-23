@@ -1,24 +1,34 @@
 const Post = require("../models/Post");
 const Comment = require("../models/Comment");
+const jwt = require("jsonwebtoken");
 
 const getPosts = async (req, res) => {
-  const posts = await Post.find().sort("-createdAt");
+  const posts = await Post.find().populate("author").sort("-createdAt");
   return res.send({ posts });
 };
 
 const getPost = async (req, res) => {
   const id = req.params.id;
-  const post = await Post.findById(id);
-  const comments = await Comment.find({ post: id }).sort("-createdAt");
+  const post = await Post.findById(id).populate("author");
+  const comments = await Comment.find({ post: id })
+    .populate("author")
+    .sort("-createdAt");
   return res.send({ post, comments });
 };
 
 const createPost = async (req, res) => {
   const { title, content, author } = req.body;
+  const { token } = req.headers;
+  let decoded = null;
+  try {
+    decoded = jwt.decode(token, process.env.SECRET_KEY);
+  } catch (err) {
+    return res.send("token invalid");
+  }
   const post = new Post({
     title: title,
     content: content,
-    author: author,
+    author: decoded.id,
   });
   await post.save();
   return res.send({ post });
