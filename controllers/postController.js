@@ -17,18 +17,12 @@ const getPost = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
-  const { title, content, author } = req.body;
-  const { token } = req.headers;
-  let decoded = null;
-  try {
-    decoded = jwt.decode(token, process.env.SECRET_KEY);
-  } catch (err) {
-    return res.send("token invalid");
-  }
+  const { title, content } = req.body;
+  const { id } = req.user;
   const post = new Post({
     title: title,
     content: content,
-    author: decoded.id,
+    author: id,
   });
   await post.save();
   return res.send({ post });
@@ -37,6 +31,10 @@ const createPost = async (req, res) => {
 const deletePost = async (req, res) => {
   const id = req.params.id;
   const post = await Post.findOneAndDelete({ _id: id });
+  const userId = req.user.id;
+  if (userId != id) {
+    return res.send("you are not authorised to do this");
+  }
   if (!post) {
     return res.send("post not found");
   }
@@ -47,6 +45,10 @@ const updatePost = async (req, res) => {
   const id = req.params.id;
   const newTitle = req.body.title;
   const newContent = req.body.content;
+  const userId = req.user.id;
+  if (userId != id) {
+    return res.send("you are not authorised to do this");
+  }
   const post = await Post.findOneAndUpdate(
     { _id: id },
     { title: newTitle, content: newContent }

@@ -1,10 +1,12 @@
 const Comment = require("../models/Comment");
 
 const createComment = async (req, res) => {
-  const { postId, content, author } = req.body;
+  const { postId, content } = req.body;
+  const { id } = req.user;
+
   const comment = new Comment({
     content: content,
-    author: author,
+    author: id,
     post: postId,
   });
   await comment.save();
