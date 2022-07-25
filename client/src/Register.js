@@ -1,6 +1,19 @@
 import React from "react";
+import { useState } from "react";
 
 const Register = () => {
+  const [formData, setFormData] = useState({});
+  const handleFormDataChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleSubmitClick = async (e) => {
+    const res = await fetch("https://localhost:4000/register/", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+  };
   return (
     <div>
       <h2 className="my-3">Register</h2>
@@ -10,9 +23,11 @@ const Register = () => {
             Email address
           </label>
           <input
+            value={formData.email}
             type="email"
             className="form-control"
-            aria-describedby="emailHelp"
+            name="email"
+            onChange={handleFormDataChange}
           />
           <div class="form-text">
             We'll never share your email with anyone else.
@@ -20,15 +35,31 @@ const Register = () => {
         </div>
         <div class=" mb-3">
           <label className="form-label">Username</label>
-          <input type="text" className="form-control" />
+          <input
+            value={formData.username}
+            type="text"
+            className="form-control"
+            name="username"
+            onChange={handleFormDataChange}
+          />
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">
             Password
           </label>
-          <input type="password" className="form-control" />
+          <input
+            value={formData.password}
+            type="password"
+            className="form-control"
+            name="password"
+            onChange={handleFormDataChange}
+          />
         </div>
-        <button type="submit" class="btn btn-primary">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          onClick={handleSubmitClick}
+        >
           Submit
         </button>
       </form>
