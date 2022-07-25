@@ -23,9 +23,7 @@ const CreateComment = (props) => {
       <div className="card-body">
         <form>
           <div className="mb-3">
-            <label for="exampleInputEmail1" className="form-label">
-              Author
-            </label>
+            <label className="form-label">Author</label>
             <input
               value={formData.author}
               className="form-control"
@@ -34,9 +32,7 @@ const CreateComment = (props) => {
             />
           </div>
           <div className="mb-3">
-            <label for="exampleInputEmail1" className="form-label">
-              Content
-            </label>
+            <label className="form-label">Content</label>
             <textarea
               rows={3}
               className="form-control"

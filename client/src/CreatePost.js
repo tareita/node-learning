@@ -23,9 +23,7 @@ const CreatePost = () => {
       <h3 className="my-4">Create a post:</h3>
       <form>
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">
-            Author
-          </label>
+          <label className="form-label">Author</label>
           <input
             value={formData.author}
             className="form-control"
@@ -36,9 +34,7 @@ const CreatePost = () => {
           />
         </div>
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">
-            Title
-          </label>
+          <label className="form-label">Title</label>
           <input
             className="form-control"
             id="exampleInputPassword1"
@@ -48,9 +44,7 @@ const CreatePost = () => {
           />
         </div>
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">
-            Content
-          </label>
+          <label className="form-label">Content</label>
           <textarea
             rows={8}
             className="form-control"

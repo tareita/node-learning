@@ -7,21 +7,22 @@ const Register = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const handleSubmitClick = async (e) => {
-    const res = await fetch("https://localhost:4000/register/", {
+    console.log(formData);
+    e.preventDefault();
+    const res = await fetch("http://localhost:4000/users/register", {
       method: "POST",
       body: JSON.stringify(formData),
       headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
+    console.log(data);
   };
   return (
     <div>
       <h2 className="my-3">Register</h2>
       <form>
-        <div class="my-3">
-          <label for="exampleInputEmail1" className="form-label">
-            Email address
-          </label>
+        <div className="my-3">
+          <label className="form-label">Email address</label>
           <input
             value={formData.email}
             type="email"
@@ -29,11 +30,11 @@ const Register = () => {
             name="email"
             onChange={handleFormDataChange}
           />
-          <div class="form-text">
+          <div className="form-text">
             We'll never share your email with anyone else.
           </div>
         </div>
-        <div class=" mb-3">
+        <div className=" mb-3">
           <label className="form-label">Username</label>
           <input
             value={formData.username}
@@ -43,10 +44,8 @@ const Register = () => {
             onChange={handleFormDataChange}
           />
         </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">
-            Password
-          </label>
+        <div className="mb-3">
+          <label className="form-label">Password</label>
           <input
             value={formData.password}
             type="password"
@@ -57,7 +56,7 @@ const Register = () => {
         </div>
         <button
           type="submit"
-          class="btn btn-primary"
+          className="btn btn-primary"
           onClick={handleSubmitClick}
         >
           Submit

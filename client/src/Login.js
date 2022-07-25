@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
@@ -6,18 +7,20 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const handleSubmitClick = async (e) => {
-    const res = await fetch("https://localhost:4000/login/", {
+    e.preventDefault();
+    const res = await fetch("http://localhost:4000/users/login/", {
       method: "POST",
       body: JSON.stringify(formData),
       headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
+    console.log(data);
   };
   return (
     <div>
       <h2 className="my-3">Login</h2>
       <form>
-        <div class=" mb-3">
+        <div className=" mb-3">
           <label className="form-label">Username</label>
           <input
             type="text"
@@ -27,10 +30,8 @@ const Login = () => {
             onChange={handleFormDataChange}
           />
         </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">
-            Password
-          </label>
+        <div className="mb-3">
+          <label className="form-label">Password</label>
           <input
             type="password"
             className="form-control"
@@ -41,7 +42,7 @@ const Login = () => {
         </div>
         <button
           type="submit"
-          class="btn btn-primary"
+          className="btn btn-primary"
           onClick={handleSubmitClick}
         >
           Submit
