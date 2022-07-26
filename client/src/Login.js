@@ -11,10 +11,12 @@ const Login = () => {
     const res = await fetch("http://localhost:4000/users/login/", {
       method: "POST",
       body: JSON.stringify(formData),
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     });
     const data = await res.json();
-    console.log(data);
   };
   return (
     <div>

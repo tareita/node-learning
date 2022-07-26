@@ -5,11 +5,13 @@ import PostDetails from "./PostDetails";
 import CreatePost from "./CreatePost";
 import Login from "./Login";
 import Register from "./Register";
+import { Navbar } from "./Navbar";
 
 function App() {
   return (
     <div className="App container">
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/posts" element={<Posts />} />

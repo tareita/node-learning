@@ -27,14 +27,15 @@ const login = async (req, res) => {
   const { username, password } = req.body;
   const existingUser = await User.findOne({ username });
   if (!existingUser) {
-    return res.send("user does not exist");
+    return res.send({ message: "user does not exist" });
   }
   const isPasswordValid = await bcrypt.compare(password, existingUser.password);
   if (!isPasswordValid) {
-    return res.send("wrong password");
+    return res.send({ message: "wrong password" });
   }
   const token = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY);
-  return res.send({ username: existingUser.username, token });
+  const responseData = { username: existingUser.username, token };
+  return res.send(responseData);
 };
 
 module.exports = { register, login };
