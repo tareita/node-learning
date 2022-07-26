@@ -9,6 +9,7 @@ const createComment = async (req, res) => {
     author: id,
     post: postId,
   });
+  await comment.populate("author");
   await comment.save();
 
   return res.send({ comment });

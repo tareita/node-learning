@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Navbar } from "./Navbar";
 import Post from "./Post";
 
 const Posts = () => {
@@ -14,6 +15,7 @@ const Posts = () => {
   };
   return (
     <div>
+      <Navbar />
       <h1 className="my-3"> Posts </h1>
       <div className="mb-3">
         <Link to="/create-post">Make your own post here</Link>

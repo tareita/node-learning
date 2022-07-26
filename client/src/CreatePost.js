@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Navbar } from "./Navbar";
 
 const CreatePost = () => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
   const handleFormDataChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -12,7 +14,7 @@ const CreatePost = () => {
     const res = await fetch("http://localhost:4000/posts/", {
       method: "POST",
       body: JSON.stringify(formData),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", token: user.token },
     });
     const data = await res.json();
     const id = data.post._id;
@@ -20,24 +22,13 @@ const CreatePost = () => {
   };
   return (
     <div>
+      <Navbar />
       <h3 className="my-4">Create a post:</h3>
       <form>
-        <div className="mb-3">
-          <label className="form-label">Author</label>
-          <input
-            value={formData.author}
-            className="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            onChange={handleFormDataChange}
-            name="author"
-          />
-        </div>
         <div className="mb-3">
           <label className="form-label">Title</label>
           <input
             className="form-control"
-            id="exampleInputPassword1"
             value={formData.title}
             onChange={handleFormDataChange}
             name="title"

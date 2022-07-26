@@ -1,8 +1,11 @@
 import React from "react";
 import { useState } from "react";
+import { Navbar } from "./Navbar";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({});
+  const navigate = useNavigate();
   const handleFormDataChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -15,10 +18,12 @@ const Register = () => {
       headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
-    console.log(data);
+    localStorage.setItem("user", JSON.stringify(data));
+    navigate("/");
   };
   return (
     <div>
+      <Navbar />
       <h2 className="my-3">Register</h2>
       <form>
         <div className="my-3">

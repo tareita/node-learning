@@ -1,8 +1,11 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Navbar } from "./Navbar";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
+  const navigate = useNavigate();
   const handleFormDataChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -17,9 +20,12 @@ const Login = () => {
       },
     });
     const data = await res.json();
+    localStorage.setItem("user", JSON.stringify(data));
+    navigate("/");
   };
   return (
     <div>
+      <Navbar />
       <h2 className="my-3">Login</h2>
       <form>
         <div className=" mb-3">
